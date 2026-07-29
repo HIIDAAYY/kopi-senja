@@ -1,0 +1,160 @@
+---
+import { profil } from '../lib/data.js';
+import { linkWAItem } from '../lib/wa.js';
+import { formatRupiah } from '../lib/format.js';
+
+const { item } = Astro.props;
+
+// Dibangun saat build, bukan di browser. Hasilnya <a href> biasa:
+// nol JavaScript, tetap berfungsi walau JS mati, terbaca crawler.
+const linkPesan = linkWAItem(profil, item);
+---
+
+<article
+  class:list={['kartu', { 'kartu--unggulan': item.unggulan }]}
+  data-kategori={item.kategori}
+>
+  <div class="kartu__media">
+    <img src={item.foto} alt={item.nama} width="800" height="800" loading="lazy" />
+  </div>
+
+  <div class="kartu__isi">
+    <h3 class="kartu__nama">{item.nama}</h3>
+    <p class="kartu__deskripsi">{item.deskripsi}</p>
+    <p class="kartu__harga">{formatRupiah(item.harga)}</p>
+
+    {
+      linkPesan && (
+        <a
+          class="kartu__pesan"
+          href={linkPesan}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Pesan
+          <span class="visually-hidden">{item.nama} via WhatsApp</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .kartu {
+    display: flex;
+    flex-direction: column;
+    /* Mengisi penuh sel grid-nya. Bersama grid-auto-rows: 1fr di
+       Menu.astro, ini yang membuat semua kartu dalam satu baris sama
+       tinggi — tanpa itu, kartu unggulan yang lebih lebar jadi jauh
+       lebih tinggi dan meninggalkan lubang kosong di sebelahnya. */
+    height: 100%;
+    width: 100%;
+    background: var(--cream-muted);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+
+  .kartu:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px -18px rgb(43 29 21 / 0.45);
+  }
+
+  /* Foto menyerap sisa tinggi kartu, bukan dikunci ke rasio tetap.
+     Rasio tetap adalah penyebab tinggi baris jadi tidak seragam.
+
+     position: relative + img absolut itu wajib, bukan hiasan. Kalau
+     <img> tetap ikut alur normal, "height: 100%" di dalam induk yang
+     tingginya otomatis jatuh balik ke rasio asli foto — kartu unggulan
+     yang lebarnya dua kolom jadi setinggi lebarnya dan menyeret seluruh
+     baris ikut tinggi. */
+  .kartu__media {
+    position: relative;
+    flex: 1;
+    min-height: 15rem;
+    overflow: hidden;
+  }
+
+  .kartu__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .kartu:hover .kartu__media img {
+    transform: scale(1.06);
+  }
+
+  /* Tidak ikut tumbuh. Kalau isi teks juga flex:1, sisa tinggi baris
+     dibagi rata dengan foto dan menyisakan area kosong besar di antara
+     deskripsi dan harga. Foto yang harus menyerap semua sisa ruang. */
+  .kartu__isi {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .kartu__nama {
+    font-size: var(--fs-card);
+    margin-bottom: 0.35rem;
+  }
+
+  .kartu__deskripsi {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--espresso) 72%, transparent);
+    margin-bottom: 1rem;
+  }
+
+  /* Harga adalah informasi utama di menu, jadi diperlakukan seperti
+     judul — Fraunces ukuran besar, bukan teks abu-abu kecil. */
+  .kartu__harga {
+    font-family: var(--font-display);
+    font-size: var(--fs-price);
+    font-weight: 700;
+    line-height: 1;
+    font-variation-settings: 'SOFT' 20, 'WONK' 1;
+    margin-bottom: 1rem;
+  }
+
+  .kartu__pesan {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    background: var(--espresso);
+    color: var(--cream);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.3s var(--ease), gap 0.3s var(--ease);
+  }
+
+  .kartu__pesan:hover {
+    background: var(--terracotta);
+    gap: 0.7rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kartu,
+    .kartu__media img,
+    .kartu__pesan {
+      transition: none;
+    }
+
+    .kartu:hover {
+      transform: none;
+    }
+
+    .kartu:hover .kartu__media img {
+      transform: none;
+    }
+  }
+</style>

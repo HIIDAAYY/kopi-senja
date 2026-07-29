@@ -5,3 +5,7 @@ dist/
 .env.*
 .DS_Store
 Thumbs.db
+.claude/
+raw/
+tmp-kandidat/
+.playwright-mcp/

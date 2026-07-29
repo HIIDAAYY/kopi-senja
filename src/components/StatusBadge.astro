@@ -1,0 +1,50 @@
+---
+import { profil } from '../lib/data.js';
+
+const jadwalRingkas = profil.jam
+  .map((b) => `${b.label} ${b.buka}–${b.tutup}`)
+  .join(' · ');
+---
+
+<p class="badge" data-badge data-keadaan="netral">
+  <span class="badge__titik" aria-hidden="true"></span>
+  <span data-badge-teks>{jadwalRingkas}</span>
+</p>
+
+<style>
+  /* Chip berlatar gelap, bukan lapisan transparan di atas amber-wash.
+     Alasannya kontras: di atas latar terang, titik status warna apa pun
+     tidak mencapai 3:1. Chip gelap memberi ruang untuk semua keadaan,
+     sekaligus membuat status lebih menonjol. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    background: var(--espresso);
+    color: var(--cream);
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .badge__titik {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--status-tutup);
+    flex-shrink: 0;
+  }
+
+  .badge[data-keadaan='buka'] .badge__titik {
+    background: var(--status-buka);
+  }
+
+  .badge[data-keadaan='segera-tutup'] .badge__titik {
+    background: var(--amber);
+  }
+
+  .badge[data-keadaan='tutup'] .badge__titik {
+    background: var(--status-tutup);
+  }
+</style>

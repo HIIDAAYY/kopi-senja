@@ -1,0 +1,92 @@
+[
+  {
+    "id": "kopi-susu-senja",
+    "nama": "Kopi Susu Senja",
+    "kategori": "kopi",
+    "harga": 18000,
+    "deskripsi": "Espresso, susu segar, gula aren cair.",
+    "foto": "/img/menu/kopi-susu-senja.webp",
+    "unggulan": true
+  },
+  {
+    "id": "espresso",
+    "nama": "Espresso",
+    "kategori": "kopi",
+    "harga": 15000,
+    "deskripsi": "Satu shot pekat, biji Jawa Barat.",
+    "foto": "/img/menu/espresso.webp",
+    "unggulan": false
+  },
+  {
+    "id": "americano",
+    "nama": "Americano",
+    "kategori": "kopi",
+    "harga": 18000,
+    "deskripsi": "Espresso dengan air panas, ringan.",
+    "foto": "/img/menu/americano.webp",
+    "unggulan": false
+  },
+  {
+    "id": "cappuccino",
+    "nama": "Cappuccino",
+    "kategori": "kopi",
+    "harga": 25000,
+    "deskripsi": "Espresso, susu, busa tebal.",
+    "foto": "/img/menu/cappuccino.webp",
+    "unggulan": false
+  },
+  {
+    "id": "caffe-latte",
+    "nama": "Caffè Latte",
+    "kategori": "kopi",
+    "harga": 25000,
+    "deskripsi": "Espresso dengan susu steamed lembut.",
+    "foto": "/img/menu/caffe-latte.webp",
+    "unggulan": false
+  },
+  {
+    "id": "kopi-tubruk",
+    "nama": "Kopi Tubruk",
+    "kategori": "kopi",
+    "harga": 12000,
+    "deskripsi": "Diseduh cara lama, disajikan panas.",
+    "foto": "/img/menu/kopi-tubruk.webp",
+    "unggulan": false
+  },
+  {
+    "id": "matcha-latte",
+    "nama": "Matcha Latte",
+    "kategori": "non-kopi",
+    "harga": 27000,
+    "deskripsi": "Matcha upacara, susu segar.",
+    "foto": "/img/menu/matcha-latte.webp",
+    "unggulan": true
+  },
+  {
+    "id": "cokelat-panas",
+    "nama": "Cokelat Panas",
+    "kategori": "non-kopi",
+    "harga": 22000,
+    "deskripsi": "Cokelat pekat, tidak terlalu manis.",
+    "foto": "/img/menu/cokelat-panas.webp",
+    "unggulan": false
+  },
+  {
+    "id": "pisang-goreng-keju",
+    "nama": "Pisang Goreng Keju",
+    "kategori": "snack",
+    "harga": 20000,
+    "deskripsi": "Pisang raja, keju parut, susu kental.",
+    "foto": "/img/menu/pisang-goreng-keju.webp",
+    "unggulan": false
+  },
+  {
+    "id": "roti-bakar-cokelat",
+    "nama": "Roti Bakar Cokelat",
+    "kategori": "snack",
+    "harga": 18000,
+    "deskripsi": "Roti tawar tebal, cokelat leleh.",
+    "foto": "/img/menu/roti-bakar-cokelat.webp",
+    "unggulan": false
+  }
+]

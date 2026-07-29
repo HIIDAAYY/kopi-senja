@@ -1,0 +1,125 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import { profil } from '../lib/data.js';
+---
+
+<section class="lokasi bagian" id="lokasi">
+  <span class="nomor-bagian">04</span>
+  <div class="wadah lokasi__grid">
+    <div class="lokasi__info reveal" style="--i: 0">
+      <p class="label lokasi__label">Lokasi &amp; Jam Buka</p>
+      <h2 class="lokasi__judul">Mampir sore, waktu paling enak</h2>
+
+      <StatusBadge />
+
+      <address class="lokasi__alamat">{profil.alamat}</address>
+
+      <ul class="lokasi__jam">
+        {
+          profil.jam.map((b) => (
+            <li>
+              <span>{b.label}</span>
+              <span>
+                {b.buka} – {b.tutup}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a
+        class="tombol tombol--garis"
+        href={profil.mapsLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Buka di Google Maps
+      </a>
+    </div>
+
+    <div class="lokasi__peta reveal" style="--i: 1">
+      {
+        profil.mapsEmbed && (
+          <iframe
+            src={profil.mapsEmbed}
+            title={`Peta lokasi ${profil.nama}`}
+            width="600"
+            height="450"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          />
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { pasangStatus } from '../scripts/status.js';
+  pasangStatus();
+</script>
+
+<style>
+  .lokasi {
+    background: var(--amber-wash);
+    color: var(--espresso);
+  }
+
+  .lokasi__label {
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+  }
+
+  .lokasi__judul {
+    font-size: var(--fs-section);
+    max-width: 14ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .lokasi__alamat {
+    font-style: normal;
+    margin: 1.5rem 0;
+    max-width: 30ch;
+  }
+
+  .lokasi__jam {
+    margin-bottom: 2rem;
+    border-top: 1px solid color-mix(in srgb, var(--espresso) 20%, transparent);
+  }
+
+  .lokasi__jam li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--espresso) 20%, transparent);
+  }
+
+  .lokasi__grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .lokasi__peta {
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 22rem;
+    background: color-mix(in srgb, var(--espresso) 10%, transparent);
+  }
+
+  .lokasi__peta iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 22rem;
+  }
+
+  @media (min-width: 60rem) {
+    .lokasi__grid {
+      grid-template-columns: 1fr 1.2fr;
+      align-items: center;
+    }
+  }
+</style>

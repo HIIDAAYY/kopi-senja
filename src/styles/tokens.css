@@ -1,0 +1,43 @@
+:root {
+  /* Warna — diturunkan dari cahaya golden hour */
+  --cream: #f7f0e6;
+  --cream-muted: #efe4d4;
+  --espresso: #2b1d15;
+  --espresso-deep: #1a110c;
+  --amber: #c97b3c;
+  --amber-wash: #e8c99b;
+  /* Digelapkan dari #8c4a2f: nilai lama hanya mencapai 4.23:1 di atas
+     --amber-wash (section Lokasi), di bawah ambang WCAG AA 4.5:1.
+     Diverifikasi oleh scripts/cek-kontras.mjs. */
+  --terracotta: #85462d;
+
+  /* Warna focus ring. Di-override per section karena tidak ada satu
+     warna pun yang punya kontras cukup terhadap latar cream sekaligus
+     latar espresso-deep. Section gelap menyetel ulang ke amber-wash. */
+  --warna-fokus: var(--espresso);
+
+  /* Titik status buka/tutup. Nilainya dipilih agar lolos 3:1 di atas
+     chip badge yang berlatar --espresso. Diverifikasi oleh
+     scripts/cek-kontras.mjs. */
+  --status-buka: #45a06a;
+  --status-tutup: #9a8e84;
+
+  /* Font */
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+
+  /* Skala tipografi */
+  --fs-hero: clamp(3.5rem, 13vw, 11rem);
+  --fs-section: clamp(2.25rem, 6vw, 4.5rem);
+  --fs-card: clamp(1.25rem, 2vw, 1.6rem);
+  --fs-price: clamp(1.5rem, 2.5vw, 2rem);
+  --fs-body: 1.125rem;
+  --fs-label: 0.8125rem;
+
+  /* Ritme vertikal */
+  --pad-bagian: clamp(5rem, 12vw, 10rem);
+  --lebar-wadah: 1200px;
+
+  /* Gerak */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}

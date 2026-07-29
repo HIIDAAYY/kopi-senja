@@ -1,0 +1,175 @@
+---
+import { profil } from '../lib/data.js';
+import { linkWAUmum } from '../lib/wa.js';
+
+const waUmum = linkWAUmum(profil);
+const baris = ['Kopi', 'Senja'];
+---
+
+<section class="hero" id="hero">
+  <span class="nomor-bagian">01</span>
+
+  <img
+    class="hero__foto"
+    src="/img/hero.webp"
+    alt="Bagian dalam kedai Kopi Senja dengan dinding kayu dan tanaman gantung"
+    width="1920"
+    height="1080"
+    fetchpriority="high"
+  />
+
+  <div class="wadah hero__isi">
+    <p class="label hero__label">Kedai Kopi · Bandung</p>
+
+    <h1 class="hero__judul">
+      {
+        baris.map((teks, i) => (
+          <span class="hero__baris">
+            <span style={`--i: ${i}`}>{teks}</span>
+          </span>
+        ))
+      }
+    </h1>
+
+    <p class="hero__tagline">{profil.tagline}</p>
+
+    <div class="hero__aksi">
+      <a class="tombol tombol--garis" href="#menu">Lihat Menu</a>
+      {
+        waUmum && (
+          <a
+            class="tombol tombol--utama"
+            href={waUmum}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Pesan via WhatsApp
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    padding-block: clamp(3rem, 8vw, 6rem);
+    background: var(--cream);
+    overflow: clip;
+  }
+
+  /* Foto ditempatkan di kanan dan judul menimpanya — bukan judul
+     berdiri sopan di tengah. Ini elemen "berani" dari spec. */
+  .hero__foto {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(62%, 900px);
+    height: 100%;
+    object-fit: cover;
+    /* Menyatu ke background cream di sisi kiri supaya judul tetap terbaca */
+    mask-image: linear-gradient(to right, transparent 0%, #000 28%, #000 100%);
+  }
+
+  .hero__isi {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__label {
+    color: var(--terracotta);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__judul {
+    font-size: var(--fs-hero);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__baris {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hero__baris > span {
+    display: block;
+  }
+
+  /* Hanya beranimasi kalau JS ada — tanpa JS judul langsung terlihat.
+     Sengaja TIDAK memakai class pemicu dari JavaScript. Pola itu
+     (sembunyikan lewat CSS, munculkan lewat JS) membuat judul
+     tersembunyi permanen kalau JS pemicunya tidak pernah jalan —
+     misalnya saat halaman tidak pernah dilukis atau di-throttle.
+     animation-fill-mode "both" memberi hasil visual yang sama:
+     keadaan awal terisi mundur selama delay, keadaan akhir bertahan. */
+  :global(.js) .hero__baris > span {
+    animation: singkap 0.9s var(--ease) both;
+    animation-delay: calc(var(--i) * 90ms);
+  }
+
+  @keyframes singkap {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      /* -10% di bawah supaya descender huruf g/y tidak terpotong */
+      clip-path: inset(0 0 -10% 0);
+    }
+  }
+
+  .hero__tagline {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    max-width: 26ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero__aksi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  @media (max-width: 48rem) {
+    /* Foto melebar penuh dan pindah ke belakang teks. Mask harus
+       memudar ke arah BAWAH, bukan atas: .hero memakai align-items:end,
+       jadi teksnya ada di bawah. Mask yang memudar ke atas akan menaruh
+       teks espresso di atas bagian foto yang paling pekat — tidak
+       terbaca sama sekali. */
+    /* Foto dikunci ke paruh atas dan memudar di ujungnya sendiri.
+       Sebelumnya foto setinggi penuh dengan mask persentase, dan titik
+       memudarnya harus ditebak terhadap tinggi blok teks — labelnya
+       jatuh tepat di area foto yang masih pekat dan jadi tak terbaca.
+       Membatasi tinggi foto membuat area teks selalu cream murni,
+       berapa pun panjang teksnya. */
+    .hero__foto {
+      width: 100%;
+      height: 52%;
+      inset: 0 0 auto 0;
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 58%,
+        transparent 100%
+      );
+    }
+
+    /* Teks turun ke area cream di bawah foto, bukan menimpanya. */
+    .hero {
+      align-items: end;
+      padding-block: 0 clamp(2.5rem, 8vw, 4rem);
+      min-height: 92svh;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .hero__baris > span {
+      animation: none;
+      clip-path: none;
+    }
+  }
+</style>

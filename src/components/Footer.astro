@@ -1,0 +1,117 @@
+---
+import { profil } from '../lib/data.js';
+import { linkWAUmum } from '../lib/wa.js';
+
+const waUmum = linkWAUmum(profil);
+const tahun = 2026;
+---
+
+<footer class="footer" id="kontak">
+  <span class="nomor-bagian">05</span>
+  <div class="wadah footer__grid">
+    <div class="reveal" style="--i: 0">
+      <p class="footer__nama">{profil.nama}</p>
+      <p class="footer__tagline">{profil.tagline}</p>
+    </div>
+
+    <nav class="footer__tautan reveal" style="--i: 1" aria-label="Kontak">
+      {
+        waUmum && (
+          <a href={waUmum} target="_blank" rel="noopener noreferrer">
+            WhatsApp
+          </a>
+        )
+      }
+      <a
+        href={`https://instagram.com/${profil.instagram}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Instagram
+      </a>
+      <a href="#menu">Menu</a>
+      <a href="#lokasi">Lokasi</a>
+    </nav>
+
+    <address class="footer__alamat reveal" style="--i: 2">{profil.alamat}</address>
+  </div>
+
+  <div class="wadah footer__bawah">
+    <p>© {tahun} {profil.nama}. Bisnis fiktif untuk keperluan portofolio.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    background: var(--espresso-deep);
+    color: var(--cream);
+    /* Latar gelap: focus ring espresso tidak akan terlihat di sini. */
+    --warna-fokus: var(--amber-wash);
+    padding-block: clamp(4rem, 8vw, 7rem) 2rem;
+    overflow: clip;
+  }
+
+  .footer__grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .footer__nama {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  }
+
+  .footer__tagline {
+    color: var(--amber-wash);
+    margin-top: 0.5rem;
+  }
+
+  .footer__tautan {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .footer__tautan a {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .footer__tautan a:hover {
+    color: var(--amber-wash);
+    border-bottom-color: currentColor;
+  }
+
+  .footer__alamat {
+    font-style: normal;
+    color: var(--cream-muted);
+    max-width: 24ch;
+  }
+
+  .footer__bawah {
+    padding-top: 2rem;
+    border-top: 1px solid color-mix(in srgb, var(--cream) 18%, transparent);
+    font-size: 0.875rem;
+    color: color-mix(in srgb, var(--cream) 65%, transparent);
+  }
+
+  @media (min-width: 48rem) {
+    .footer__grid {
+      grid-template-columns: 1.5fr 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer__tautan a {
+      transition: none;
+    }
+  }
+</style>

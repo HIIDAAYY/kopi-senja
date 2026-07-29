@@ -1,0 +1,34 @@
+{
+  "nama": "Kopi Senja",
+  "tagline": "Ngopi santai di tengah kota",
+  "deskripsi": "Kedai kopi kecil di sudut Cikapundung. Kami menyeduh sejak 2019, dengan biji dari petani Jawa Barat dan tempat duduk yang sengaja dibuat untuk berlama-lama.",
+  "wa": "6281234567890",
+  "waTemplateItem": "Halo {nama}, saya mau pesan {item} ({harga}). Apakah tersedia?",
+  "waTemplateUmum": "Halo {nama}, saya mau tanya-tanya dulu boleh?",
+  "instagram": "kopisenja.id",
+  "alamat": "Jl. Cikapundung Barat No. 12, Bandung 40117",
+  "alamatStruktur": {
+    "jalan": "Jl. Cikapundung Barat No. 12",
+    "kota": "Bandung",
+    "provinsi": "Jawa Barat",
+    "kodePos": "40117",
+    "negara": "ID"
+  },
+  "mapsEmbed": "https://maps.google.com/maps?q=-6.9218,107.6083&z=16&output=embed",
+  "mapsLink": "https://www.google.com/maps/search/?api=1&query=-6.9218%2C107.6083",
+  "koordinat": { "lat": -6.9218, "lng": 107.6083 },
+  "jam": [
+    {
+      "hari": [1, 2, 3, 4, 5],
+      "label": "Senin–Jumat",
+      "buka": "08:00",
+      "tutup": "22:00"
+    },
+    {
+      "hari": [6, 0],
+      "label": "Sabtu–Minggu",
+      "buka": "09:00",
+      "tutup": "23:00"
+    }
+  ]
+}
