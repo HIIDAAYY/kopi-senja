@@ -4,7 +4,9 @@ Situs company profile untuk kedai kopi fiktif di Bandung. Dibangun sebagai karya
 
 ![Tampilan desktop](docs/tampilan-desktop.jpeg)
 
-> **Status:** selesai. Lighthouse 100 di Accessibility, Best Practices, dan SEO. Terverifikasi di 1440px, 768px, dan 375px.
+**[Lihat situsnya →](https://kopi-senja-brown.vercel.app)**
+
+> **Status:** live. Lighthouse 100 di Accessibility, Best Practices, dan SEO. Terverifikasi di 1440px, 768px, dan 375px.
 
 ## Keputusan desain
 
@@ -64,23 +66,24 @@ Dua hal yang tertangkap saat verifikasi dan sudah diperbaiki: judul hero sempat 
 
 ## Hasil audit
 
-Lighthouse pada build produksi (`npm run preview`), device mobile:
+Lighthouse pada situs live, device mobile:
 
 | Kategori | Skor |
 |---|---|
 | Accessibility | **100** |
 | Best Practices | **100** |
 | SEO | **100** |
-| 52 audit dijalankan | 0 gagal |
+| 51 audit dijalankan | 0 gagal |
 
-Metrik performa dari trace Chrome DevTools:
+Metrik performa dari trace Chrome DevTools di situs live:
 
 | Metrik | Nilai |
 |---|---|
-| LCP | 133 ms |
+| LCP | 150 ms |
 | CLS | **0.00** |
+| TTFB | 24 ms |
 
-CLS nol itu hasil dari `width`/`height` eksplisit di setiap `<img>` — ruangnya sudah dipesan sebelum filenya datang. Kedua angka ini diukur di localhost tanpa throttling jaringan, jadi belum mewakili kondisi nyata; ukur ulang di URL live untuk angka yang bermakna.
+CLS nol itu hasil dari `width`/`height` eksplisit di setiap `<img>` — ruangnya sudah dipesan sebelum filenya datang. Diukur tanpa throttling jaringan; angka pada koneksi lambat akan lebih tinggi.
 
 Audit pertama memberi Accessibility 96 dengan satu kegagalan kontras: nomor section raksasa (01–05) pada opacity 0.08. Secara WCAG itu bisa dibantah sebagai teks dekoratif, tapi audit tersebut menunjuk masalah nyata dari arah lain — angka itu tidak membawa informasi apa pun, tapi ditulis sebagai teks di HTML, sehingga screen reader membacakan "02, 03, 04, 05" sebagai noise. Sekarang angkanya dibangkitkan lewat `content: attr(data-nomor)` di CSS. Dekorasi ditaruh di tempatnya, dan skornya jadi 100.
 
@@ -125,7 +128,6 @@ Perintah lain:
 
 ## Yang belum selesai
 
-- **Skor performa Lighthouse belum diukur di kondisi nyata.** LCP dan CLS di atas diambil dari localhost tanpa throttling. Ukur ulang di URL live.
 - **Link WhatsApp belum diuji dari ponsel sungguhan.** Isi pesannya sudah diverifikasi dari HTML hasil build, termasuk item beraksen seperti "Caffè Latte", tapi membuka aplikasi WhatsApp dari perangkat asli belum dicoba.
 
 ## Batasan yang diketahui
