@@ -53,5 +53,9 @@ const jsonLd = buatJsonLd(profil, menu, Astro.site.origin);
   </head>
   <body>
     <slot />
+    <script>
+      import { pasangReveal } from '../scripts/reveal.js';
+      pasangReveal();
+    </script>
   </body>
 </html>
