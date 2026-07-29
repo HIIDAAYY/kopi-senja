@@ -6,7 +6,21 @@
   --espresso-deep: #1a110c;
   --amber: #c97b3c;
   --amber-wash: #e8c99b;
-  --terracotta: #8c4a2f;
+  /* Digelapkan dari #8c4a2f: nilai lama hanya mencapai 4.23:1 di atas
+     --amber-wash (section Lokasi), di bawah ambang WCAG AA 4.5:1.
+     Diverifikasi oleh scripts/cek-kontras.mjs. */
+  --terracotta: #85462d;
+
+  /* Warna focus ring. Di-override per section karena tidak ada satu
+     warna pun yang punya kontras cukup terhadap latar cream sekaligus
+     latar espresso-deep. Section gelap menyetel ulang ke amber-wash. */
+  --warna-fokus: var(--espresso);
+
+  /* Titik status buka/tutup. Nilainya dipilih agar lolos 3:1 di atas
+     chip badge yang berlatar --espresso. Diverifikasi oleh
+     scripts/cek-kontras.mjs. */
+  --status-buka: #45a06a;
+  --status-tutup: #9a8e84;
 
   /* Font */
   --font-display: 'Fraunces Variable', Georgia, serif;

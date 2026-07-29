@@ -63,9 +63,11 @@ a {
   color: inherit;
 }
 
-/* Focus ring wajib terlihat di background terang maupun gelap */
+/* Focus ring wajib terlihat di background terang maupun gelap.
+   Warnanya diambil dari --warna-fokus yang di-override tiap section
+   gelap, bukan satu warna tetap yang pasti gagal di salah satu latar. */
 :focus-visible {
-  outline: 3px solid var(--amber);
+  outline: 3px solid var(--warna-fokus);
   outline-offset: 3px;
   border-radius: 2px;
 }

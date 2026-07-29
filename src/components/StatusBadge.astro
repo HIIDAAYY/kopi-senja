@@ -12,13 +12,18 @@ const jadwalRingkas = profil.jam
 </p>
 
 <style>
+  /* Chip berlatar gelap, bukan lapisan transparan di atas amber-wash.
+     Alasannya kontras: di atas latar terang, titik status warna apa pun
+     tidak mencapai 3:1. Chip gelap memberi ruang untuk semua keadaan,
+     sekaligus membuat status lebih menonjol. */
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
     padding: 0.5rem 1.1rem;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--espresso) 12%, transparent);
+    background: var(--espresso);
+    color: var(--cream);
     font-size: 0.9375rem;
     font-weight: 700;
   }
@@ -27,12 +32,12 @@ const jadwalRingkas = profil.jam
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--espresso) 45%, transparent);
+    background: var(--status-tutup);
     flex-shrink: 0;
   }
 
   .badge[data-keadaan='buka'] .badge__titik {
-    background: #2e7d4f;
+    background: var(--status-buka);
   }
 
   .badge[data-keadaan='segera-tutup'] .badge__titik {
@@ -40,6 +45,6 @@ const jadwalRingkas = profil.jam
   }
 
   .badge[data-keadaan='tutup'] .badge__titik {
-    background: color-mix(in srgb, var(--espresso) 45%, transparent);
+    background: var(--status-tutup);
   }
 </style>
