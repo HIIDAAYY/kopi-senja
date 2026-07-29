@@ -1,0 +1,153 @@
+---
+import MenuCard from './MenuCard.astro';
+import { menu, KATEGORI } from '../lib/data.js';
+
+const tombolFilter = [{ id: 'semua', label: 'Semua' }, ...KATEGORI];
+---
+
+<section class="menu bagian" id="menu">
+  <span class="nomor-bagian">03</span>
+  <div class="wadah">
+    <div class="menu__kepala reveal" style="--i: 0">
+      <p class="label menu__label">Menu</p>
+      <h2 class="menu__judul">Sepuluh alasan untuk mampir</h2>
+    </div>
+
+    <!-- Disembunyikan tanpa JS lewat CSS: filter tanpa JavaScript
+         hanya akan jadi tombol mati. -->
+    <div
+      class="filter"
+      data-filter
+      role="group"
+      aria-label="Saring menu berdasarkan kategori"
+    >
+      {
+        tombolFilter.map((k) => (
+          <button
+            type="button"
+            class="filter__tombol"
+            data-kategori={k.id}
+            aria-pressed={k.id === 'semua' ? 'true' : 'false'}
+          >
+            {k.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <p class="visually-hidden" id="menu-status" aria-live="polite"></p>
+
+    <div class="menu__grid" id="menu-grid">
+      {
+        menu.map((item, i) => (
+          <div class="reveal" style={`--i: ${i % 3}`}>
+            <MenuCard item={item} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { pasangFilter } from '../scripts/filter.js';
+  pasangFilter();
+</script>
+
+<style>
+  .menu {
+    background: var(--cream);
+  }
+
+  .menu__label {
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+  }
+
+  .menu__judul {
+    font-size: var(--fs-section);
+    max-width: 16ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .filter {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+
+  :global(.js) .filter {
+    display: flex;
+  }
+
+  .filter__tombol {
+    padding: 0.55rem 1.25rem;
+    border: 2px solid color-mix(in srgb, var(--espresso) 25%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--espresso);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.25s var(--ease),
+      border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .filter__tombol:hover {
+    border-color: var(--espresso);
+  }
+
+  .filter__tombol[aria-pressed='true'] {
+    background: var(--espresso);
+    border-color: var(--espresso);
+    color: var(--cream);
+  }
+
+  .menu__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+  }
+
+  /* Kartu yang disembunyikan filter. Transisi ada di sini supaya
+     kartu memudar, bukan hilang mendadak. */
+  .menu__grid > div {
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+
+  .menu__grid > div[hidden] {
+    display: none;
+  }
+
+  .menu__grid > div.menu__kartu--pudar {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  @media (min-width: 40rem) {
+    .menu__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Item unggulan mengambil dua kolom — inilah yang membuat grid
+       asimetris, bukan 3x4 seragam. */
+    .menu__grid > div:has(.kartu--unggulan) {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .menu__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu__grid > div,
+    .filter__tombol {
+      transition: none;
+    }
+  }
+</style>
