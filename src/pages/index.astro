@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
 import { profil } from '../lib/data.js';
 ---
 
@@ -8,10 +9,6 @@ import { profil } from '../lib/data.js';
   deskripsi={profil.deskripsi}
 >
   <main>
-    <section class="bagian">
-      <div class="wadah">
-        <p class="label">Placeholder — diganti mulai Task 7</p>
-      </div>
-    </section>
+    <Hero />
   </main>
 </Base>
