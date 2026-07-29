@@ -1,16 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+import { profil } from '../lib/data.js';
 ---
 
-<Base judul="Kopi Senja" deskripsi="Kedai kopi lokal di Bandung.">
+<Base
+  judul={`${profil.nama} — ${profil.tagline}`}
+  deskripsi={profil.deskripsi}
+>
   <main>
     <section class="bagian">
       <div class="wadah">
-        <span class="nomor-bagian">01</span>
-        <p class="label">Uji token</p>
-        <h1 style="font-size: var(--fs-hero)">Kopi Senja</h1>
-        <p>Paragraf uji untuk memastikan Plus Jakarta Sans termuat.</p>
-        <a class="tombol tombol--utama" href="#">Tombol utama</a>
+        <p class="label">Placeholder — diganti mulai Task 7</p>
       </div>
     </section>
   </main>

@@ -1,7 +1,13 @@
 ---
 import '../styles/global.css';
+import { menu, profil } from '../lib/data.js';
+import { buatJsonLd } from '../lib/jsonld.js';
 
 const { judul, deskripsi } = Astro.props;
+
+const urlKanonik = new URL(Astro.url.pathname, Astro.site).href;
+const urlOg = new URL('/img/og-image.jpg', Astro.site).href;
+const jsonLd = buatJsonLd(profil, menu, Astro.site.origin);
 ---
 
 <!doctype html>
@@ -9,8 +15,36 @@ const { judul, deskripsi } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
     <title>{judul}</title>
     <meta name="description" content={deskripsi} />
+    <link rel="canonical" href={urlKanonik} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content={profil.nama} />
+    <meta property="og:title" content={judul} />
+    <meta property="og:description" content={deskripsi} />
+    <meta property="og:url" content={urlKanonik} />
+    <meta property="og:image" content={urlOg} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={judul} />
+    <meta name="twitter:description" content={deskripsi} />
+    <meta name="twitter:image" content={urlOg} />
+
+    <!-- Foto hero adalah LCP. Di-preload supaya tidak menunggu CSS selesai. -->
+    <link rel="preload" as="image" href="/img/hero.webp" fetchpriority="high" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+      is:inline
+    />
+
     <!-- Dipasang sebelum paint pertama supaya tidak ada kedipan.
          Semua CSS yang menyembunyikan konten bergantung pada class ini. -->
     <script is:inline>
