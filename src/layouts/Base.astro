@@ -1,0 +1,23 @@
+---
+import '../styles/global.css';
+
+const { judul, deskripsi } = Astro.props;
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{judul}</title>
+    <meta name="description" content={deskripsi} />
+    <!-- Dipasang sebelum paint pertama supaya tidak ada kedipan.
+         Semua CSS yang menyembunyikan konten bergantung pada class ini. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
