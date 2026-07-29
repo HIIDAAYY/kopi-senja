@@ -14,8 +14,8 @@
     "kodePos": "40117",
     "negara": "ID"
   },
-  "mapsEmbed": "",
-  "mapsLink": "",
+  "mapsEmbed": "https://maps.google.com/maps?q=-6.9218,107.6083&z=16&output=embed",
+  "mapsLink": "https://www.google.com/maps/search/?api=1&query=-6.9218%2C107.6083",
   "koordinat": { "lat": -6.9218, "lng": 107.6083 },
   "jam": [
     {
