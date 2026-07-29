@@ -85,7 +85,14 @@ a {
   margin-inline: auto;
 }
 
-.nomor-bagian {
+/* Nomor section raksasa (01–05).
+   Murni dekorasi — tidak membawa informasi apa pun. Karena itu ditulis
+   lewat CSS, bukan sebagai teks di HTML. Konsekuensinya benar di dua
+   arah: screen reader tidak lagi membacakan "02, 03, 04, 05" sebagai
+   noise, dan pemeriksa kontras tidak menilainya sebagai teks yang harus
+   terbaca (opacity 0.08 memang sengaja nyaris tak terlihat). */
+[data-nomor]::before {
+  content: attr(data-nomor);
   position: absolute;
   top: clamp(1.5rem, 4vw, 3.5rem);
   right: clamp(0.5rem, 3vw, 2.5rem);

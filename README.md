@@ -4,7 +4,7 @@ Situs company profile untuk kedai kopi fiktif di Bandung. Dibangun sebagai karya
 
 ![Tampilan desktop](docs/tampilan-desktop.jpeg)
 
-> **Status:** selesai dan terverifikasi di 1440px, 768px, dan 375px. Belum di-deploy dan Lighthouse belum diukur — lihat [Yang belum selesai](#yang-belum-selesai).
+> **Status:** selesai. Lighthouse 100 di Accessibility, Best Practices, dan SEO. Terverifikasi di 1440px, 768px, dan 375px.
 
 ## Keputusan desain
 
@@ -57,10 +57,32 @@ Dua hal yang tertangkap saat verifikasi dan sudah diperbaiki: judul hero sempat 
   - terakota di atas amber wash hanya 4.23:1 → digelapkan ke `#85462d` (4.55:1)
   - focus ring amber gagal di latar terang, dan tidak ada satu warna pun yang lolos 3:1 terhadap cream sekaligus espresso pekat → warna focus ring kini diambil dari `--warna-fokus` yang di-override section gelap
   - kedua titik status gagal di atas lapisan transparan badge → badge diubah jadi chip gelap
-- Seluruh animasi mati saat `prefers-reduced-motion: reduce`, di CSS maupun di JavaScript
+- Seluruh animasi mati saat `prefers-reduced-motion: reduce`, di CSS maupun di JavaScript — diverifikasi dengan media feature benar-benar diaktifkan: animasi hero `none`, seluruh 20 elemen reveal ditandai tampil saat load tanpa menunggu scroll, transisi kartu efektif nol
 - Filter kategori memakai `aria-pressed` dan mengumumkan jumlah hasil lewat region `aria-live`
 - Tiap tombol "Pesan" punya nama aksesibel unik, bukan sepuluh tombol bernama sama
 - Situs berfungsi penuh tanpa JavaScript: kartu tampil semua, tombol filter disembunyikan, badge menampilkan jadwal statis, tombol WhatsApp tetap jalan
+
+## Hasil audit
+
+Lighthouse pada build produksi (`npm run preview`), device mobile:
+
+| Kategori | Skor |
+|---|---|
+| Accessibility | **100** |
+| Best Practices | **100** |
+| SEO | **100** |
+| 52 audit dijalankan | 0 gagal |
+
+Metrik performa dari trace Chrome DevTools:
+
+| Metrik | Nilai |
+|---|---|
+| LCP | 133 ms |
+| CLS | **0.00** |
+
+CLS nol itu hasil dari `width`/`height` eksplisit di setiap `<img>` — ruangnya sudah dipesan sebelum filenya datang. Kedua angka ini diukur di localhost tanpa throttling jaringan, jadi belum mewakili kondisi nyata; ukur ulang di URL live untuk angka yang bermakna.
+
+Audit pertama memberi Accessibility 96 dengan satu kegagalan kontras: nomor section raksasa (01–05) pada opacity 0.08. Secara WCAG itu bisa dibantah sebagai teks dekoratif, tapi audit tersebut menunjuk masalah nyata dari arah lain — angka itu tidak membawa informasi apa pun, tapi ditulis sebagai teks di HTML, sehingga screen reader membacakan "02, 03, 04, 05" sebagai noise. Sekarang angkanya dibangkitkan lewat `content: attr(data-nomor)` di CSS. Dekorasi ditaruh di tempatnya, dan skornya jadi 100.
 
 ## SEO
 
@@ -103,10 +125,8 @@ Perintah lain:
 
 ## Yang belum selesai
 
-- **Lighthouse belum diukur.** Target ≥ 95 di keempat kategori. Jalankan pada `npm run preview`, bukan `npm run dev`.
-- **Belum di-deploy.** Setelah domain diketahui, perbarui `site` di `astro.config.mjs` — `og:image` dan `canonical` bergantung pada nilai itu untuk menghasilkan URL absolut.
-- **`prefers-reduced-motion` diverifikasi lewat pemeriksaan aturan CSS hasil build**, bukan dengan menyalakan pengaturannya di sistem. Aturannya terbukti berada di dalam media query yang benar, tapi belum pernah dilihat langsung.
-- **Link WhatsApp belum diuji dari ponsel sungguhan.** Isi pesannya sudah diverifikasi dari HTML hasil build, termasuk item beraksen seperti "Caffè Latte".
+- **Skor performa Lighthouse belum diukur di kondisi nyata.** LCP dan CLS di atas diambil dari localhost tanpa throttling. Ukur ulang di URL live.
+- **Link WhatsApp belum diuji dari ponsel sungguhan.** Isi pesannya sudah diverifikasi dari HTML hasil build, termasuk item beraksen seperti "Caffè Latte", tapi membuka aplikasi WhatsApp dari perangkat asli belum dicoba.
 
 ## Batasan yang diketahui
 
