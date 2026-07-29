@@ -1,0 +1,120 @@
+---
+import { profil } from '../lib/data.js';
+
+// Ukuran ditulis eksplisit per foto agar CLS tetap nol.
+const foto = [
+  {
+    src: '/img/suasana/1.webp',
+    w: 1200,
+    h: 1600,
+    alt: 'Barista menyeduh kopi di balik meja bar',
+  },
+  {
+    src: '/img/suasana/2.webp',
+    w: 900,
+    h: 700,
+    alt: 'Meja kayu dengan dua cangkir kopi',
+  },
+  {
+    src: '/img/suasana/3.webp',
+    w: 900,
+    h: 1200,
+    alt: 'Sudut baca dengan kursi rotan dan tanaman',
+  },
+];
+---
+
+<section class="tentang bagian" id="tentang">
+  <span class="nomor-bagian">02</span>
+  <div class="wadah tentang__grid">
+    <div class="tentang__teks reveal" style="--i: 0">
+      <p class="label tentang__label">Tentang Kami</p>
+      <h2 class="tentang__judul">
+        Tempat yang sengaja dibuat untuk berlama-lama
+      </h2>
+      <p class="tentang__paragraf">{profil.deskripsi}</p>
+    </div>
+
+    <div class="tentang__kolase">
+      {
+        foto.map((f, i) => (
+          <figure
+            class={`tentang__foto tentang__foto--${i + 1} reveal`}
+            style={`--i: ${i + 1}`}
+          >
+            <img src={f.src} alt={f.alt} width={f.w} height={f.h} loading="lazy" />
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .tentang {
+    background: var(--espresso);
+    color: var(--cream);
+  }
+
+  .tentang__label {
+    color: var(--amber-wash);
+    margin-bottom: 1.25rem;
+  }
+
+  .tentang__judul {
+    font-size: var(--fs-section);
+    max-width: 14ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .tentang__paragraf {
+    max-width: 42ch;
+    color: var(--cream-muted);
+  }
+
+  .tentang__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  /* Kolase asimetris: tiga foto dengan tinggi dan offset berbeda,
+     bukan grid seragam. */
+  .tentang__kolase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    align-items: start;
+  }
+
+  .tentang__foto {
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .tentang__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tentang__foto--1 {
+    grid-row: span 2;
+    aspect-ratio: 3 / 4;
+  }
+
+  .tentang__foto--2 {
+    aspect-ratio: 4 / 3;
+  }
+
+  .tentang__foto--3 {
+    aspect-ratio: 3 / 4;
+    margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  @media (min-width: 60rem) {
+    .tentang__grid {
+      grid-template-columns: 1fr 1.1fr;
+      align-items: center;
+    }
+  }
+</style>
