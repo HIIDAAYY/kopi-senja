@@ -1,25 +1,31 @@
 ---
 import { profil } from '../lib/data.js';
 
-// Ukuran ditulis eksplisit per foto agar CLS tetap nol.
+// Ukuran ditulis eksplisit per foto agar CLS tetap nol. Angka di bawah
+// harus cocok dengan file di public/img/suasana/ — dicetak oleh
+// scripts/optimasi-foto.mjs setiap kali fotonya diproses ulang.
+//
+// Urutan sengaja tidak mengikuti nomor file: slot pertama adalah satu-
+// satunya bidang potret di kolase, jadi diisi foto potret. Memaksa foto
+// lanskap ke bidang potret akan memotong isinya terlalu banyak.
 const foto = [
   {
-    src: '/img/suasana/1.webp',
-    w: 1200,
-    h: 1600,
-    alt: 'Barista menyeduh kopi di balik meja bar',
+    src: '/img/suasana/2.webp',
+    w: 1400,
+    h: 2100,
+    alt: 'Dinding cream dengan tanaman gantung dan satu cangkir kopi di atas rak kayu',
   },
   {
-    src: '/img/suasana/2.webp',
-    w: 900,
-    h: 700,
-    alt: 'Meja kayu dengan dua cangkir kopi',
+    src: '/img/suasana/1.webp',
+    w: 1400,
+    h: 788,
+    alt: 'Deretan bangku kayu di dekat jendela dengan dinding tanaman hijau',
   },
   {
     src: '/img/suasana/3.webp',
-    w: 900,
-    h: 1200,
-    alt: 'Sudut baca dengan kursi rotan dan tanaman',
+    w: 1400,
+    h: 788,
+    alt: 'Rak buku kayu berisi buku dan majalah di sudut baca kedai',
   },
 ];
 ---
@@ -108,8 +114,10 @@ const foto = [
     aspect-ratio: 4 / 3;
   }
 
+  /* Lanskap, sama seperti foto 2 — tapi diberi offset ke bawah supaya
+     kolasenya tetap asimetris, bukan dua kotak sejajar rapi. */
   .tentang__foto--3 {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
     margin-top: clamp(0.75rem, 2vw, 1.5rem);
   }
 

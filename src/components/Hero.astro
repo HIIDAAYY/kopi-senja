@@ -12,7 +12,7 @@ const baris = ['Kopi', 'Senja'];
   <img
     class="hero__foto"
     src="/img/hero.webp"
-    alt="Suasana bagian dalam kedai Kopi Senja saat sore hari"
+    alt="Bagian dalam kedai Kopi Senja dengan dinding kayu dan tanaman gantung"
     width="1920"
     height="1080"
     fetchpriority="high"
@@ -135,9 +135,34 @@ const baris = ['Kopi', 'Senja'];
   }
 
   @media (max-width: 48rem) {
+    /* Foto melebar penuh dan pindah ke belakang teks. Mask harus
+       memudar ke arah BAWAH, bukan atas: .hero memakai align-items:end,
+       jadi teksnya ada di bawah. Mask yang memudar ke atas akan menaruh
+       teks espresso di atas bagian foto yang paling pekat — tidak
+       terbaca sama sekali. */
+    /* Foto dikunci ke paruh atas dan memudar di ujungnya sendiri.
+       Sebelumnya foto setinggi penuh dengan mask persentase, dan titik
+       memudarnya harus ditebak terhadap tinggi blok teks — labelnya
+       jatuh tepat di area foto yang masih pekat dan jadi tak terbaca.
+       Membatasi tinggi foto membuat area teks selalu cream murni,
+       berapa pun panjang teksnya. */
     .hero__foto {
       width: 100%;
-      mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+      height: 52%;
+      inset: 0 0 auto 0;
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 58%,
+        transparent 100%
+      );
+    }
+
+    /* Teks turun ke area cream di bawah foto, bukan menimpanya. */
+    .hero {
+      align-items: end;
+      padding-block: 0 clamp(2.5rem, 8vw, 4rem);
+      min-height: 92svh;
     }
   }
 

@@ -44,6 +44,12 @@ const linkPesan = linkWAItem(profil, item);
   .kartu {
     display: flex;
     flex-direction: column;
+    /* Mengisi penuh sel grid-nya. Bersama grid-auto-rows: 1fr di
+       Menu.astro, ini yang membuat semua kartu dalam satu baris sama
+       tinggi — tanpa itu, kartu unggulan yang lebih lebar jadi jauh
+       lebih tinggi dan meninggalkan lubang kosong di sebelahnya. */
+    height: 100%;
+    width: 100%;
     background: var(--cream-muted);
     border-radius: 6px;
     overflow: hidden;
@@ -55,16 +61,24 @@ const linkPesan = linkWAItem(profil, item);
     box-shadow: 0 18px 40px -18px rgb(43 29 21 / 0.45);
   }
 
+  /* Foto menyerap sisa tinggi kartu, bukan dikunci ke rasio tetap.
+     Rasio tetap adalah penyebab tinggi baris jadi tidak seragam.
+
+     position: relative + img absolut itu wajib, bukan hiasan. Kalau
+     <img> tetap ikut alur normal, "height: 100%" di dalam induk yang
+     tingginya otomatis jatuh balik ke rasio asli foto — kartu unggulan
+     yang lebarnya dua kolom jadi setinggi lebarnya dan menyeret seluruh
+     baris ikut tinggi. */
   .kartu__media {
-    aspect-ratio: 1;
+    position: relative;
+    flex: 1;
+    min-height: 15rem;
     overflow: hidden;
   }
 
-  .kartu--unggulan .kartu__media {
-    aspect-ratio: 16 / 10;
-  }
-
   .kartu__media img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -75,10 +89,13 @@ const linkPesan = linkWAItem(profil, item);
     transform: scale(1.06);
   }
 
+  /* Tidak ikut tumbuh. Kalau isi teks juga flex:1, sisa tinggi baris
+     dibagi rata dengan foto dan menyisakan area kosong besar di antara
+     deskripsi dan harga. Foto yang harus menyerap semua sisa ruang. */
   .kartu__isi {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 0 0 auto;
     padding: 1.25rem 1.25rem 1.5rem;
   }
 
@@ -102,7 +119,6 @@ const linkPesan = linkWAItem(profil, item);
     font-weight: 700;
     line-height: 1;
     font-variation-settings: 'SOFT' 20, 'WONK' 1;
-    margin-top: auto;
     margin-bottom: 1rem;
   }
 

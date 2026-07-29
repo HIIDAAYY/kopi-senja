@@ -108,7 +108,17 @@ const tombolFilter = [{ id: 'semua', label: 'Semua' }, ...KATEGORI];
   .menu__grid {
     display: grid;
     grid-template-columns: 1fr;
+    /* Semua baris sama tinggi. Di container yang tingginya otomatis,
+       1fr membuat tiap baris mengambil tinggi baris tertinggi — inilah
+       yang menghilangkan lubang kosong di samping kartu unggulan. */
+    grid-auto-rows: 1fr;
     gap: clamp(1rem, 2.5vw, 1.75rem);
+  }
+
+  /* Pembungkus reveal harus ikut meregang, kalau tidak kartunya tidak
+     punya tinggi sel untuk diisi. */
+  .menu__grid > div {
+    display: flex;
   }
 
   /* Kartu yang disembunyikan filter. Transisi ada di sini supaya
@@ -130,17 +140,21 @@ const tombolFilter = [{ id: 'semua', label: 'Semua' }, ...KATEGORI];
     .menu__grid {
       grid-template-columns: repeat(2, 1fr);
     }
-
-    /* Item unggulan mengambil dua kolom — inilah yang membuat grid
-       asimetris, bukan 3x4 seragam. */
-    .menu__grid > div:has(.kartu--unggulan) {
-      grid-column: span 2;
-    }
   }
 
   @media (min-width: 64rem) {
     .menu__grid {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Item unggulan mengambil dua kolom — inilah yang membuat grid
+       asimetris, bukan 3x4 seragam.
+
+       Sengaja hanya di 3 kolom. Di 2 kolom, kartu span-2 memakan satu
+       baris penuh dan mendorong kartu tetangganya, meninggalkan sel
+       kosong. Di 3 kolom, sisa satu kolom selalu terisi. */
+    .menu__grid > div:has(.kartu--unggulan) {
+      grid-column: span 2;
     }
   }
 
